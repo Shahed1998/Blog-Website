@@ -1,3 +1,8 @@
-body {
-  background-color: green;
+nav {
+  min-height: 90px;
+  margin-bottom: 20px;
+}
+
+footer {
+  text-align: center;
 }
