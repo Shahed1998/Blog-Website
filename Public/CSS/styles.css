@@ -1,5 +1,6 @@
+html,
 body {
-  height: 100vh;
+  height: 100%;
 }
 
 nav {
@@ -7,22 +8,28 @@ nav {
   margin-bottom: 20px;
 }
 
-.footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 90px;
-  background-color: #e3f2fd;
-  color: #000;
-  text-align: center;
-}
-
-.footer p {
-  margin-top: 25px;
+#container {
+  min-height: 80%;
 }
 
 .covering {
   width: 95%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
+  padding-bottom: 90px;
+  overflow: auto;
+}
+
+.footer {
+  background-color: #e3f2fd;
+  color: #000;
+  position: relative;
+  width: 100%;
+  height: 90px;
+  margin-top: -90px;
+  clear: both;
+  text-align: center;
+}
+
+.footer p {
+  margin-top: 20px;
 }
