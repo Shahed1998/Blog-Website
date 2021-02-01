@@ -39,9 +39,22 @@ app.get('/contact', (req, res) => {
   res.render('contact', { val: contactText });
 });
 
-// app.get('/post', (req, res) => {
-//   res.render('post', postObj);
-// });
+app.get('/post/:postName', (req, res) => {
+  console.log(req.params.postName);
+  for (let i = 0; i < globalPost.length; i++) {
+    if (
+      globalPost[i].title
+        .toLowerCase()
+        .includes(req.params.postName.toLowerCase())
+    ) {
+      console.log('Match found');
+    } else {
+      console.log(`Match not found`);
+    }
+  }
+
+  res.redirect('/');
+});
 
 //_________________________________________Post requests______________________________________
 
