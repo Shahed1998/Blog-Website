@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const port = 3000;
 const app = express();
+const _ = require('lodash');
 const homeText = `This is where I will update my daily routines.`;
 
 const aboutText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -16,7 +17,8 @@ sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Scelerisque eu ultrices vitae auctor eu. Mauris ultrices eros in cursus turpis massa tincidunt dui. 
 Scelerisque purus semper eget duis at tellus at. Faucibus ornare suspendisse sed nisi lacus sed.`;
 
-const globalPost = [];
+const globalPost = [{ title: 'Home', post: homeText }];
+let reqSend = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('Public'));
@@ -40,20 +42,34 @@ app.get('/contact', (req, res) => {
 });
 
 app.get('/post/:postName', (req, res) => {
-  console.log(req.params.postName);
+  const requestedTitle = _.lowerCase(req.params.postName);
+
   for (let i = 0; i < globalPost.length; i++) {
-    if (
-      globalPost[i].title
-        .toLowerCase()
-        .includes(req.params.postName.toLowerCase())
-    ) {
-      console.log('Match found');
+    const storedTitle = _.lowerCase(globalPost[i].title);
+    if (storedTitle === requestedTitle) {
+      reqSend = [];
+      const dynObj = {
+        page: 'post',
+        title: globalPost[i].title,
+        post: globalPost[i].post,
+      };
+      reqSend.push(dynObj);
+      break;
     } else {
-      console.log(`Match not found`);
+      reqSend = [];
+      const dynObj = {
+        page: 'home',
+        title: 'none',
+        post: 'none',
+      };
+      reqSend.push(dynObj);
     }
   }
-
-  res.redirect('/');
+  res.render(reqSend[0].page, {
+    title: reqSend[0].title,
+    post: reqSend[0].post,
+    globalPost: globalPost,
+  });
 });
 
 //_________________________________________Post requests______________________________________
