@@ -17,7 +17,7 @@ sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Scelerisque eu ultrices vitae auctor eu. Mauris ultrices eros in cursus turpis massa tincidunt dui. 
 Scelerisque purus semper eget duis at tellus at. Faucibus ornare suspendisse sed nisi lacus sed.`;
 
-const globalPost = [{ title: 'Home', post: homeText }];
+const globalPost = [{ title: '', post: '' }];
 let reqSend = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,6 +48,9 @@ app.get('/post/:postName', (req, res) => {
     const storedTitle = _.lowerCase(globalPost[i].title);
     if (storedTitle === requestedTitle) {
       reqSend = [];
+      if (globalPost[i].title === '' || globalPost[i].post === '') {
+        continue;
+      }
       const dynObj = {
         page: 'post',
         title: globalPost[i].title,
@@ -66,6 +69,7 @@ app.get('/post/:postName', (req, res) => {
     }
   }
   res.render(reqSend[0].page, {
+    val: homeText,
     title: reqSend[0].title,
     post: reqSend[0].post,
     globalPost: globalPost,

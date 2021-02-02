@@ -1,20 +1,31 @@
 <%- include('partials/header') -%>
 <div id="container">
-<div class="covering">
-  
-  
-
-  <% for(let i=0 ; i<globalPost.length ; i++){ %>
+  <div class="covering">
     <div>
-      <h1><%= globalPost[i].title %></h1><br>
-      <p>
-        <%= globalPost[i].post %>
-      </p>
-    
+      <h1>Home</h1>
+      <br />
+      <p><%=val%></p>
     </div>
-  <% } %>
 
-</div>
+    <% for(let i=0 ; i<globalPost.length ; i++){ %>
+    <% const length = 100; %>
+    <% let truncatedString = ''; %>
+    <% if(globalPost[i].title === '' || globalPost[i].post===''){ continue; } %>
+    <% if(globalPost[i].post.length >100){ %>
+    <% truncatedString =`${globalPost[i].post.substring(0,length)} ...`; %>
+    <% }else{ %>
+    <% truncatedString =globalPost[i].post; } %>
+    <div>
+      <h1><%= globalPost[i].title %></h1>
+      <br />
+      <p>
+        <%= truncatedString %>
+
+        <a href="/post/<%=globalPost[i].title%>"> Read more</a>
+      </p>
+    </div>
+    <% } %>
+  </div>
 </div>
 
 <%- include('partials/footer') -%>
